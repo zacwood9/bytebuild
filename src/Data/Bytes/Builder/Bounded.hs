@@ -853,7 +853,7 @@ wordLEB128 (W# w) = lebCommon (W# w)
 
 -- | Encode a 32-bit word with LEB-128.
 word32LEB128 :: Word32 -> Builder 5
-word32LEB128 (W32# w) = lebCommon (W# w)
+word32LEB128 (W32# w) = lebCommon (W# (word32ToWord# w))
 
 -- | Encode a 64-bit word with LEB-128.
 word64LEB128 :: Word64 -> Builder 10
