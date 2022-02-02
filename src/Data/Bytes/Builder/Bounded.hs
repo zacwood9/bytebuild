@@ -229,12 +229,12 @@ word64Dec (W64# w) = wordCommonDec# w
 -- | Requires up to 10 bytes. Encodes an unsigned 32-bit integer as decimal.
 -- This encoding never starts with a zero unless the argument was zero.
 word32Dec :: Word32 -> Builder 10
-word32Dec (W32# w) = wordCommonDec# w
+word32Dec (W32# w) = wordCommonDec# (word32ToWord# w)
 
 -- | Requires up to 5 bytes. Encodes an unsigned 16-bit integer as decimal.
 -- This encoding never starts with a zero unless the argument was zero.
 word16Dec :: Word16 -> Builder 5
-word16Dec (W16# w) = wordCommonDec# w
+word16Dec (W16# w) = wordCommonDec# (word16ToWord# w)
 
 -- | Requires up to 3 bytes. Encodes an unsigned 8-bit integer as decimal.
 -- This encoding never starts with a zero unless the argument was zero.
@@ -246,7 +246,7 @@ word8Dec (W8# w) =
   -- However, I (Andrew Martin) am concerned that although lookup
   -- table perform very well in microbenchmarks, they can thrash
   -- L1 cache in real applications.
-  word8Dec# w
+  word8Dec# (word8ToWord# w)
 
 -- | Requires up to 19 bytes. Encodes an unsigned machine-sized integer
 -- as decimal. This encoding never starts with a zero unless the argument
@@ -266,21 +266,21 @@ int64Dec (I64# w) = intCommonDec# w
 -- Negative numbers are preceded by a minus sign. Positive numbers
 -- are not preceded by anything.
 int32Dec :: Int32 -> Builder 11
-int32Dec (I32# w) = intCommonDec# w
+int32Dec (I32# w) = intCommonDec# (int32ToInt# w)
 
 -- | Requires up to 6 bytes. Encodes a signed 16-bit integer as decimal.
 -- This encoding never starts with a zero unless the argument was zero.
 -- Negative numbers are preceded by a minus sign. Positive numbers
 -- are not preceded by anything.
 int16Dec :: Int16 -> Builder 6
-int16Dec (I16# w) = intCommonDec# w
+int16Dec (I16# w) = intCommonDec# (int16ToInt# w)
 
 -- | Requires up to 4 bytes. Encodes a signed 8-bit integer as decimal.
 -- This encoding never starts with a zero unless the argument was zero.
 -- Negative numbers are preceded by a minus sign. Positive numbers
 -- are not preceded by anything.
 int8Dec :: Int8 -> Builder 4
-int8Dec (I8# w) = intCommonDec# w
+int8Dec (I8# w) = intCommonDec# (int8ToInt# w)
 
 -- | Requires up to 20 bytes. Encodes a signed machine-sized integer
 -- as decimal. This encoding never starts with a zero unless the
@@ -440,13 +440,13 @@ word48PaddedLowerHex (W64# w) = word48PaddedLowerHex# w
 -- hexadecimal, zero-padding the encoding to 8 digits. This uses
 -- uppercase for the alphabetical digits.
 word32PaddedUpperHex :: Word32 -> Builder 8
-word32PaddedUpperHex (W32# w) = word32PaddedUpperHex# w
+word32PaddedUpperHex (W32# w) = word32PaddedUpperHex# (word32ToWord# w)
 
 -- | Requires exactly 8 bytes. Encodes a 32-bit unsigned integer as
 -- hexadecimal, zero-padding the encoding to 8 digits. This uses
 -- lowercase for the alphabetical digits.
 word32PaddedLowerHex :: Word32 -> Builder 8
-word32PaddedLowerHex (W32# w) = word32PaddedLowerHex# w
+word32PaddedLowerHex (W32# w) = word32PaddedLowerHex# (word32ToWord# w)
 
 -- | Requires exactly 4 bytes. Encodes a 16-bit unsigned integer as
 -- hexadecimal, zero-padding the encoding to 4 digits. This uses
@@ -455,7 +455,7 @@ word32PaddedLowerHex (W32# w) = word32PaddedLowerHex# w
 -- >>> word16PaddedUpperHex 0xab0
 -- 0AB0
 word16PaddedUpperHex :: Word16 -> Builder 4
-word16PaddedUpperHex (W16# w) = word16PaddedUpperHex# w
+word16PaddedUpperHex (W16# w) = word16PaddedUpperHex# (word16ToWord# w)
 
 -- | Requires exactly 4 bytes. Encodes a 16-bit unsigned integer as
 -- hexadecimal, zero-padding the encoding to 4 digits. This uses
@@ -464,7 +464,7 @@ word16PaddedUpperHex (W16# w) = word16PaddedUpperHex# w
 -- >>> word16PaddedLowerHex 0xab0
 -- 0ab0
 word16PaddedLowerHex :: Word16 -> Builder 4
-word16PaddedLowerHex (W16# w) = word16PaddedLowerHex# w
+word16PaddedLowerHex (W16# w) = word16PaddedLowerHex# (word16ToWord# w)
 
 -- | Requires at most 4 bytes. Encodes a 16-bit unsigned integer as
 -- hexadecimal. No leading zeroes are displayed. Letters are presented
@@ -473,7 +473,7 @@ word16PaddedLowerHex (W16# w) = word16PaddedLowerHex# w
 -- >>> word16LowerHex 0xab0
 -- ab0
 word16LowerHex :: Word16 -> Builder 4
-word16LowerHex (W16# w) = word16LowerHex# w
+word16LowerHex (W16# w) = word16LowerHex# (word16ToWord# w)
 
 -- | Requires at most 4 bytes. Encodes a 16-bit unsigned integer as
 -- hexadecimal. No leading zeroes are displayed. Letters are presented
@@ -482,25 +482,25 @@ word16LowerHex (W16# w) = word16LowerHex# w
 -- >>> word16UpperHex 0xab0
 -- AB0
 word16UpperHex :: Word16 -> Builder 4
-word16UpperHex (W16# w) = word16UpperHex# w
+word16UpperHex (W16# w) = word16UpperHex# (word16ToWord# w)
 
 -- | Requires at most 2 bytes. Encodes a 8-bit unsigned integer as
 -- hexadecimal. No leading zeroes are displayed. If the number is zero,
 -- a single zero digit is used.
 word8LowerHex :: Word8 -> Builder 2
-word8LowerHex (W8# w) = word8LowerHex# w
+word8LowerHex (W8# w) = word8LowerHex# (word8ToWord# w)
 
 -- | Requires exactly 2 bytes. Encodes a 8-bit unsigned integer as
 -- hexadecimal, zero-padding the encoding to 2 digits. This uses
 -- uppercase for the alphabetical digits.
 word8PaddedUpperHex :: Word8 -> Builder 2
-word8PaddedUpperHex (W8# w) = word8PaddedUpperHex# w
+word8PaddedUpperHex (W8# w) = word8PaddedUpperHex# (word8ToWord# w)
 
 -- | Requires exactly 2 bytes. Encodes a 8-bit unsigned integer as
 -- hexadecimal, zero-padding the encoding to 2 digits. This uses
 -- lowercase for the alphabetical digits.
 word8PaddedLowerHex :: Word8 -> Builder 2
-word8PaddedLowerHex (W8# w) = word8PaddedLowerHex# w
+word8PaddedLowerHex (W8# w) = word8PaddedLowerHex# (word8ToWord# w)
 
 -- TODO: Is it actually worth unrolling this loop. I suspect that it
 -- might not be. Benchmark this.
@@ -732,7 +732,7 @@ wordPaddedDec2 !w = Unsafe.construct $ \arr off -> do
 wordPaddedDec4 :: Word -> Builder 4
 wordPaddedDec4 !w = Unsafe.construct $ \arr off -> do
   putRem10
-    (putRem10 $ putRem10 $ putRem10 
+    (putRem10 $ putRem10 $ putRem10
      (\_ _ _ -> pure ())
     ) arr (off + 3) w
   pure (off + 4)
@@ -928,19 +928,19 @@ int64BE :: Int64 -> Builder 8
 int64BE (I64# i) = word64BE (W64# (int2Word# i))
 
 int32BE :: Int32 -> Builder 4
-int32BE (I32# i) = word32BE (W32# (int2Word# i))
+int32BE (I32# i) = word32BE (W32# (int32ToWord32# i))
 
 int16BE :: Int16 -> Builder 2
-int16BE (I16# i) = word16BE (W16# (int2Word# i))
+int16BE (I16# i) = word16BE (W16# (int16ToWord16# i))
 
 int64LE :: Int64 -> Builder 8
 int64LE (I64# i) = word64LE (W64# (int2Word# i))
 
 int32LE :: Int32 -> Builder 4
-int32LE (I32# i) = word32LE (W32# (int2Word# i))
+int32LE (I32# i) = word32LE (W32# (int32ToWord32# i))
 
 int16LE :: Int16 -> Builder 2
-int16LE (I16# i) = word16LE (W16# (int2Word# i))
+int16LE (I16# i) = word16LE (W16# (int16ToWord16# i))
 
 word128LE :: Word128 -> Builder 16
 word128LE (Word128 hi lo) = append (word64LE lo) (word64LE hi)
@@ -1067,7 +1067,7 @@ approxDiv10 :: Word -> Word
 approxDiv10 !n = unsafeShiftR (0x1999999A * n) 32
 
 unsafeWordToWord8 :: Word -> Word8
-unsafeWordToWord8 (W# w) = W8# w
+unsafeWordToWord8 (W# w) = W8# (wordToWord8# w)
 
 foreign import ccall unsafe "bytebuild_paste_double" c_paste_double ::
   MutableByteArray# s -> Int# -> Double# -> IO Int

@@ -192,8 +192,8 @@ runOnto hint@(I# hint# ) (Builder f) cs0 = runST $ do
   reverseCommitsOntoChunks cs0 cs
 
 -- | Variant of 'runOnto' that conses the additional chunks
--- in reverse order. 
-reversedOnto :: 
+-- in reverse order.
+reversedOnto ::
      Int -- ^ Size of initial chunk (use 4080 if uncertain)
   -> Builder -- ^ Builder
   -> Chunks
@@ -1169,7 +1169,7 @@ replicate !len !w = fromEffect len
 -- For numbers less than 1073741829, this gives a correct answer.
 approxDiv10 :: Word -> Word
 approxDiv10 !n = unsafeShiftR (0x1999999A * n) 32
-  
+
 -- -- A weird beast useful for rewrite rules. Not yet used. This will
 -- -- ultimately replace fromEffect and fromBounded.
 -- require :: Int -> Builder
@@ -1183,4 +1183,4 @@ approxDiv10 !n = unsafeShiftR (0x1999999A * n) 32
 --               (# sX, bufX, 0#, lenX, Mutable buf0 off0 cs0 #)
 
 unsafeWordToWord8 :: Word -> Word8
-unsafeWordToWord8 (W# w) = W8# w
+unsafeWordToWord8 (W# w) = W8# (Exts.wordToWord8# w)

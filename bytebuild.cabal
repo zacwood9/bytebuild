@@ -18,7 +18,7 @@ description:
   that runs out of space simply aborts and is rerun at the beginning
   of the next chunk. This strategy for building is suitable for most
   CSVs and several line protocols (carbon, InfluxDB, etc.).
-  
+
 homepage: https://github.com/byteverse/bytebuild
 bug-reports: https://github.com/byteverse/bytebuild/issues
 license: BSD-3-Clause
@@ -49,7 +49,7 @@ library
     , base >=4.12.0.0 && <5
     , byteslice >=0.2.6 && <0.3
     , bytestring >=0.10.8.2 && <0.11
-    , haskell-src-meta >=0.8
+    , ghc-meta
     , integer-logarithms >=1.0.3 && <1.1
     , natural-arithmetic >=0.1 && <0.2
     , primitive-offset >=0.2 && <0.3

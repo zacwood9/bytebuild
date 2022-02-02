@@ -10,7 +10,7 @@ module Data.Bytes.Builder.Template
 import Control.Monad (when)
 import Data.Bytes.Builder.Class (toBuilder)
 import GHC.Ptr (Ptr(Ptr))
-import Language.Haskell.Meta.Parse (parseExp)
+import GHC.Meta.Parse (parseExp)
 import Language.Haskell.TH (Q,Exp)
 import Language.Haskell.TH.Lib (integerL,stringPrimL,litE)
 import Language.Haskell.TH.Quote (QuasiQuoter(..))
@@ -42,7 +42,7 @@ import qualified Language.Haskell.TH as TH
 --
 -- In the future, a more sophisticated @bbldr@ variant will be added
 -- that will support expressions where the maximum length of the entire
--- builder can be computed at compile time. 
+-- builder can be computed at compile time.
 bldr :: QuasiQuoter
 bldr = QuasiQuoter
   { quoteExp = templExp
@@ -82,7 +82,7 @@ compile (Literal lit) =
       strLen = litE . integerL . fromIntegral $ length bytes
    in [|Builder.cstringLen (Ptr $(strExp), $(strLen))|]
 compile (Splice str) = case parseExp str of
-  Left err -> fail err
+  Left (_, _, err) -> fail err
   Right hs -> [|toBuilder $(pure hs)|]
 
 parse :: String -> Either String Template
