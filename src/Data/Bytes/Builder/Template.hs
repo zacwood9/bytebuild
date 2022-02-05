@@ -10,7 +10,7 @@ module Data.Bytes.Builder.Template
 import Control.Monad (when)
 import Data.Bytes.Builder.Class (toBuilder)
 import GHC.Ptr (Ptr(Ptr))
-import GHC.Meta.Parse (parseExp)
+import Language.Haskell.Meta.Parse (parseExp)
 import Language.Haskell.TH (Q,Exp)
 import Language.Haskell.TH.Lib (integerL,stringPrimL,litE)
 import Language.Haskell.TH.Quote (QuasiQuoter(..))
